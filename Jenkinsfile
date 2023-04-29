@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh "ssh -i $SSH_PRIVATE_KEY root@$EC2_INSTANCE_ID 'cd /root/app && docker-compose up -d"
+                sh "ssh -i $SSH_PRIVATE_KEY root@$IP_DA_DROPLET 'cd /root/app && docker-compose up -d"
             }
         }
     }
