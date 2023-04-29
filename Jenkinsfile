@@ -14,7 +14,11 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh "ssh -i $SSH_PRIVATE_KEY root@$IP_DA_DROPLET 'cd /root/app && docker-compose up -d"
+                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-private-key-ocean', keyFileVariable: 'SSH_PRIVATE_KEY')]) {
+                    sh 'rsync -r --delete --exclude=".git" -e "ssh -i $SSH_PRIVATE_KEY" . root@$IP_DA_DROPLET:/root/app'
+                    sh "ssh -i $SSH_PRIVATE_KEY root@$IP_DA_DROPLET 'cd /root/app && docker-compose up -d --build'"
+                }
+                
             }
         }
     }
