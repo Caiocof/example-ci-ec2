@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         APP_NAME = 'bank-app'
+        INSTANCE_HOST= '159.89.238.236'
         SSH_PRIVATE_KEY = credentials('ssh-private-key-ocean')
     }
     stages {
